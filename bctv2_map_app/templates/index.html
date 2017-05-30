@@ -1,9 +1,11 @@
+{% load staticfiles %}
 {% load leaflet_tags %}
+
 <html>
 <head>
     {% leaflet_js %}
     {% leaflet_css %}
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
     <style>
         .leaflet-container {
             height: 100%;
@@ -33,22 +35,16 @@
     <!--jquery library-->
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
-
     <!--assorted library plugins css-->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
           integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/solar/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GC77SCz5O11gVtXl0sSfbQYEWSSznn1wPDHgL1BGUTFU9iEoUrG4IOJa5CBVY8kR" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"/>
-    <link rel="stylesheet" href="assets/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.css">
-    <link rel="stylesheet" href="assets/js/leaflet.navbar/Leaflet.NavBar.css">
-    <link rel="stylesheet" href="assets/css/app.css">
 
-    <!-- nanogallery2 -->
-    <link href="assets/js/nanogallery2/css/nanogallery2.min.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="assets/js/nanogallery2/jquery.nanogallery2.min.js"></script>
+    <link rel="stylesheet" href="/bctv2_map_app/static/css/app.css">
 
-    <!--bootstrap tour plugin-->
+     <!--bootstrap tour plugin-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.11.0/css/bootstrap-tour.min.css"/>
 
     <link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon-76.png">
@@ -81,6 +77,19 @@
     }
 
 </script>
-
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.11.0/js/bootstrap-tour.js"></script>
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>#}
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.min.js"></script>#}
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>#}
+{#<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>#}
+{#<script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script>#}
+{#<script src='https://unpkg.com/leaflet.gridlayer.googlemutant@latest/Leaflet.GoogleMutant.js'></script>#}
+{#<script src="assets/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.js"></script>#}
+{#<script src="assets/js/leaflet.navbar/Leaflet.NavBar.js"></script>#}
+{#<script src="assets/js/Leaflet.MakiMarkers.js"></script>#}
+{#<script src="assets/js/leaflet.ajax.js"></script>#}
+{#<script src="assets/js/leaflet.easyPrint.js"></script>#}
 </body>
 </html>

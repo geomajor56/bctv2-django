@@ -38,20 +38,24 @@ LEAFLET_CONFIG = {
     # 'MINIMAP': True,
 
     'PLUGINS': {
-
+        'jquery': {
+            'css': [],
+            'js': 'https://code.jquery.com/jquery-2.2.4.min.js',
+            'auto-include': True,
+        },
         'Leaflet-Navbar': {
-            'css': ['/static/webmap/leaflet.navbar/Leaflet.NavBar.css'],
-            'js': '/static/webmap/leaflet.navbar/Leaflet.NavBar.js',
+            'css': ['/static/leaflet-plugins/leaflet-navbar/Leaflet.NavBar.css'],
+            'js': '/static/leaflet-plugins/leaflet-navbar/Leaflet.NavBar.js',
             'auto-include': True,
         },
         'Leaflet-MakiMarkers': {
             'css': [],
-            'js': '/static/webmap/Leaflet.MakiMarkers.js',
+            'js': '/static/leaflet-plugins/leaflet-makimarkers/Leaflet.MakiMarkers.js',
             'auto-include': True,
         },
-        'Leaflet-Providers': {
-            'css': [],
-            'js': 'https://cdnjs.cloudflare.com/ajax/libs/leaflet-providers/1.1.10/leaflet-providers.js',
+        'Leaflet-Groupedlayer': {
+            'css': ['https://cdn.jsdelivr.net/leaflet.groupedlayercontrol/0.6.0/leaflet.groupedlayercontrol.min.css'],
+            'js': 'https://cdn.jsdelivr.net/leaflet.groupedlayercontrol/0.6.0/leaflet.groupedlayercontrol.min.js',
             'auto-include': True,
         },
         'Leaflet-Ajax': {
@@ -74,11 +78,7 @@ LEAFLET_CONFIG = {
             'js': 'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js',
             'auto-include': True,
         },
-        'jquery': {
-            'css': [],
-            'js': 'https://code.jquery.com/jquery-2.2.4.min.js',
-            'auto-include': True,
-        },
+
         "nanoGallery": {
             'css': ['https://cdnjs.cloudflare.com/ajax/libs/nanogallery/5.10.3/css/nanogallery.min.css'],
             'js': 'https://cdnjs.cloudflare.com/ajax/libs/nanogallery/5.10.3/jquery.nanogallery.min.js',

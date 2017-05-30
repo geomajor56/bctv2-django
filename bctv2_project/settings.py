@@ -29,7 +29,7 @@ ALLOWED_HOSTS = []
 LEAFLET_CONFIG = {
     # 'SRID': '4326',
     'DEFAULT_CENTER': (41.798959, -70.307006),
-    'DEFAULT_ZOOM': 12,
+    'DEFAULT_ZOOM': 11,
     'MIN_ZOOM': 10,
     'MAX_ZOOM': 18,
     'RESET_VIEW': True,
@@ -37,59 +37,55 @@ LEAFLET_CONFIG = {
     'SCALE': 'both',
     # 'MINIMAP': True,
 
-    # 'PLUGINS': {
-    #     'Leaflet-Coordinates': {
-    #         'css': ['/static/webmap/Leaflet.Coordinates-0.1.5.css'],
-    #         'js': '/static/webmap/Leaflet.Coordinates-0.1.5.src.js',
-    #         'auto-include': True,
-    #     },
-    #     'Leaflet-Navbar': {
-    #         'css': ['/static/webmap/leaflet.navbar/Leaflet.NavBar.css'],
-    #         'js': '/static/webmap/leaflet.navbar/Leaflet.NavBar.js',
-    #         'auto-include': True,
-    #     },
-    #     'Leaflet-MakiMarkers': {
-    #         'css': [],
-    #         'js': '/static/webmap/Leaflet.MakiMarkers.js',
-    #         'auto-include': True,
-    #     },
-    #     'Leaflet-Providers': {
-    #         'css': [],
-    #         'js': 'https://cdnjs.cloudflare.com/ajax/libs/leaflet-providers/1.1.10/leaflet-providers.js',
-    #         'auto-include': True,
-    #     },
-    #     'Leaflet-Ajax': {
-    #         'css': [],
-    #         'js': 'https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.0.0/leaflet.ajax.min.js',
-    #         'auto-include': True,
-    #     },
-    #     'List': {
-    #         'css': [],
-    #         'js': 'https://cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js',
-    #         'auto-include': True,
-    #     },
-    #     'Typeahead': {
-    #         'css': [],
-    #         'js': 'https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js',
-    #         'auto-include': True,
-    #     },
-    #     'Handlebars': {
-    #         'css': [],
-    #         'js': 'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js',
-    #         'auto-include': True,
-    #     },
-    #     'jquery': {
-    #         'css': [],
-    #         'js': 'https://code.jquery.com/jquery-2.2.4.min.js',
-    #         'auto-include': True,
-    #     },
-    #     "nanoGallery": {
-    #         'css': ['https://cdnjs.cloudflare.com/ajax/libs/nanogallery/5.10.3/css/nanogallery.min.css'],
-    #         'js': 'https://cdnjs.cloudflare.com/ajax/libs/nanogallery/5.10.3/jquery.nanogallery.min.js',
-    #         'auto-include': True
-    #     },
-    #
-    # }
+    'PLUGINS': {
+
+        'Leaflet-Navbar': {
+            'css': ['/static/webmap/leaflet.navbar/Leaflet.NavBar.css'],
+            'js': '/static/webmap/leaflet.navbar/Leaflet.NavBar.js',
+            'auto-include': True,
+        },
+        'Leaflet-MakiMarkers': {
+            'css': [],
+            'js': '/static/webmap/Leaflet.MakiMarkers.js',
+            'auto-include': True,
+        },
+        'Leaflet-Providers': {
+            'css': [],
+            'js': 'https://cdnjs.cloudflare.com/ajax/libs/leaflet-providers/1.1.10/leaflet-providers.js',
+            'auto-include': True,
+        },
+        'Leaflet-Ajax': {
+            'css': [],
+            'js': 'https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.0.0/leaflet.ajax.min.js',
+            'auto-include': True,
+        },
+        'List': {
+            'css': [],
+            'js': 'https://cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js',
+            'auto-include': True,
+        },
+        'Typeahead': {
+            'css': [],
+            'js': 'https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js',
+            'auto-include': True,
+        },
+        'Handlebars': {
+            'css': [],
+            'js': 'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js',
+            'auto-include': True,
+        },
+        'jquery': {
+            'css': [],
+            'js': 'https://code.jquery.com/jquery-2.2.4.min.js',
+            'auto-include': True,
+        },
+        "nanoGallery": {
+            'css': ['https://cdnjs.cloudflare.com/ajax/libs/nanogallery/5.10.3/css/nanogallery.min.css'],
+            'js': 'https://cdnjs.cloudflare.com/ajax/libs/nanogallery/5.10.3/jquery.nanogallery.min.js',
+            'auto-include': True
+        },
+
+    }
 }
 
 TINYMCE_DEFAULT_CONFIG = {
@@ -110,6 +106,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bctv2_map_app',
+    'djgeojson',
     'leaflet',
     'tinymce',
 ]

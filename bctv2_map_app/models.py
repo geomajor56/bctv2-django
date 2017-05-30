@@ -14,8 +14,7 @@ class BctPoint(models.Model):
     wetland = models.FloatField( blank=True)
     total = models.FloatField( blank=True)
     narrative = tinymce_models.HTMLField(default='type something here', blank=True)
-
-    bct_point = models.PointField()
+    geom = models.PointField()
 
     def __str__(self):
         return self.bct_id
@@ -23,7 +22,18 @@ class BctPoint(models.Model):
 
 class BctParcel(models.Model):
     bct_id = models.CharField(max_length=50)
-    bct_poly = models.PolygonField()
+    geom = models.PolygonField()
 
     def __str__(self):
         return self.bct_id
+
+
+class BrewsterBorder(models.Model):
+    geom = models.PolygonField()
+
+
+class Narrative(models.Model):
+    narrative = tinymce_models.HTMLField(default='intro narrative', blank=True)
+
+    def __str__(self):
+        return self.narrative

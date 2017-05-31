@@ -42,9 +42,9 @@
           integrity="sha384-GC77SCz5O11gVtXl0sSfbQYEWSSznn1wPDHgL1BGUTFU9iEoUrG4IOJa5CBVY8kR" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"/>
 
-    <link rel="stylesheet" href="/bctv2_map_app/static/css/app.css">
+    <link rel="stylesheet" href="/static/css/app.css">
 
-     <!--bootstrap tour plugin-->
+    <!--bootstrap tour plugin-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.11.0/css/bootstrap-tour.min.css"/>
 
     <link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon-76.png">
@@ -77,12 +77,103 @@
     }
 
 </script>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div class="navbar-icon-container"><a href="#" class="navbar-icon pull-right visible-xs" id="nav-btn"><i class="fa fa-bars fa-lg white"></i></a>
+                <a href="#" class="navbar-icon pull-right visible-xs" id="sidebar-toggle-btn"><i
+                        class="fa fa-search fa-lg white"></i></a>
+            </div>
+            <a class="navbar-brand" href="#">Brewster Conservation Trust</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="legend-btn"><i class="fa fa-image white"></i>&nbsp;&nbsp;Show Legend</a></li>
+                <li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="list-btn"><i class="fa fa-list white"></i>&nbsp;&nbsp;Search Grantors List</a></li>
+                <li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="slideshow-btn"><i class="fa fa-camera-retro white"></i>&nbsp;&nbsp;Image Gallery</a></li>
+                <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="about-btn"><i class="fa fa-question-circle white"></i>&nbsp;&nbsp;About</a></li>
+                <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="welcome-btn"><i class="fa fa-file-text white"></i>&nbsp;&nbsp;Introduction</a></li>
+            </ul>
+        </div><!--/.navbar-collapse -->
+    </div>
+</div>
+<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Welcome to the Brewster Conservation Trust Interactive Web Map</h4>
+            </div>
+            <div class="modal-body">
+                <div class="panel panel-primary">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus et metus at turpis viverra maximus. Maecenas faucibus auctor gravida. Donec quis mattis nunc. In bibendum
+                        mattis molestie. Praesent ac dolor non justo porta pretium. Vivamus hendrerit facilisis velit, at pulvinar enim euismod sit amet. Sed at lectus vel ante mollis lacinia. Nunc
+                        bibendum, augue id suscipit luctus, enim libero gravida nulla, congue iaculis augue velit sit amet massa. Suspendisse facilisis ornare est vel maximus. Suspendisse sed volutpat
+                        libero. Integer dapibus turpis magna, volutpat blandit mi convallis et. Quisque pellentesque mauris ut tortor hendrerit pretium. Sed velit neque, varius eget mollis et,
+                        elementum ac massa. Morbi eu ligula id tellus bibendum laoreet. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam quis nibh
+                        purus.</p>
+                    <p>The data provided on this site is for informational and planning purposes only.</p>
+                    <p>Absolutely no accuracy or completeness guarantee is implied or intended.</p>
+                    <p>All information on this map is subject to such variations and corrections as might result
+                        from a complete title search and/or accurate field survey.</p>
+                    <p>All data and associated information provided by the Brewster Conservation Trust</p>
+                </div>
+                <!--</div>-->
+                <!--</div>-->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="legendModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Map Legend</h4>
+            </div>
+            <div class="modal-body">
+
+                <img src="/static/img/greenTree.png">&nbsp&nbsp&nbspBCT Owned Land<br>
+                <img src="/static/img/blueTree.png">&nbsp&nbsp&nbspConservation Restriction on Private Land<br>
+                <img src="/static/img/redTree.png">&nbsp&nbsp&nbspConservation Restriction on Town Land
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="slideshowModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="bct-navbar-gallery">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title">BCT Property Slide Show</h3>
+            </div>
+            <div class="modal-body">
+                <div id="bct_nanogallery2"></div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.11.0/js/bootstrap-tour.js"></script>
-{#<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>#}
-{#<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.min.js"></script>#}
-{#<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>#}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>
 {#<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>#}
 {#<script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script>#}
 {#<script src='https://unpkg.com/leaflet.gridlayer.googlemutant@latest/Leaflet.GoogleMutant.js'></script>#}
@@ -91,5 +182,6 @@
 {#<script src="assets/js/Leaflet.MakiMarkers.js"></script>#}
 {#<script src="assets/js/leaflet.ajax.js"></script>#}
 {#<script src="assets/js/leaflet.easyPrint.js"></script>#}
+<script src="/static/js/app.js"></script>
 </body>
 </html>

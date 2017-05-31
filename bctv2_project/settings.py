@@ -36,6 +36,7 @@ LEAFLET_CONFIG = {
     'ATTRIBUTION_PREFIX': 'Powered by django-leaflet',
     'SCALE': 'both',
     # 'MINIMAP': True,
+    # 'TILES': [],
 
     'PLUGINS': {
         'jquery': {

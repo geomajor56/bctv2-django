@@ -18,7 +18,7 @@ class BctPoint(models.Model):
 
     def __str__(self):
         return self.bct_id
-
+ 
 
 class BctParcel(models.Model):
     bct_id = models.CharField(max_length=50)

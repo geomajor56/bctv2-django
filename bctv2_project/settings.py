@@ -28,15 +28,15 @@ ALLOWED_HOSTS = []
 
 LEAFLET_CONFIG = {
     # 'SRID': '4326',
-    'DEFAULT_CENTER': (41.798959, -70.307006),
-    'DEFAULT_ZOOM': 11,
+    'DEFAULT_CENTER': (41.74737922562798, -70.0688695),
+    'DEFAULT_ZOOM': 13,
     'MIN_ZOOM': 10,
     'MAX_ZOOM': 18,
-    'RESET_VIEW': True,
+    'RESET_VIEW': False,
     'ATTRIBUTION_PREFIX': 'Powered by django-leaflet',
     'SCALE': 'both',
     # 'MINIMAP': True,
-    # 'TILES': [],
+    'TILES': [],
 
     'PLUGINS': {
         'jquery': {
@@ -96,7 +96,7 @@ TINYMCE_DEFAULT_CONFIG = {
     'width': "700px",
     'theme_advanced_buttons3': "fontselect,fontsizeselect,emotions,preview,",
 }
-
+TINYMCE_SPELLCHECKER = True
 # Application definition
 
 INSTALLED_APPS = [

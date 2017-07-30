@@ -25,6 +25,8 @@
     <meta name="author" content="">
     <title>Brewster Conservation Trust</title>
 
+    {#    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>#}
+    <script src='https://unpkg.com/leaflet.gridlayer.googlemutant@latest/Leaflet.GoogleMutant.js'></script>
 
     <!--google maps api with key-->
     <script src="https://unpkg.com/es6-promise@4.0.5/dist/es6-promise.min.js"></script>
@@ -40,7 +42,7 @@
           integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/solar/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GC77SCz5O11gVtXl0sSfbQYEWSSznn1wPDHgL1BGUTFU9iEoUrG4IOJa5CBVY8kR" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css"/>
 
     <link rel="stylesheet" href="/static/css/app.css">
 
@@ -58,7 +60,49 @@
 {% leaflet_map "main" callback="main_map_init" %}
 
 <script type="text/javascript">
+
+    L.MakiMarkers.accessToken = "pk.eyJ1IjoiZ2VvbWFqb3I1NiIsImEiOiJjaW9iejZ4cGYwNDc0dnpsejBmc2g0Z3QzIn0.8hKDWYbdQW7cbIE7eeu4-A";
+    var google_hybrid = L.gridLayer.googleMutant({
+        type: 'hybrid',
+    });
+    var google_terrain = L.gridLayer.googleMutant({
+        type: 'terrain',
+    });
+    var google_streets = L.gridLayer.googleMutant({
+        type: 'roadmap',
+
+    });
+    var baseLayers = {
+        "Google Satellite": google_hybrid,
+        "Google Streets": google_streets,
+        "Google Terrain": google_terrain
+
+
+    };
+
+    var groupedOverlays = {
+        "Points of Interest": {
+            {#            "<img src='assets/img/theater.png' width='24' height='28'>&nbsp;Theaters": brewster,#}
+            {#            "<img src='assets/img/museum.png' width='24' height='28'>&nbsp;Museums": brewster#}
+        }
+    };
+
+
+    /* Highlight search box text on click */
+    $("#searchbox").click(function () {
+        $(this).select();
+    });
+
+
     function main_map_init(map, options) {
+
+        L.control.navbar().addTo(map);
+
+{#       var glOptions = {collapsed: false};#}
+
+        var layerControl = L.control.groupedLayers(baseLayers, {collapsed: false
+                    }).addTo(map);
+
 
         var pointdataurl = '{% url "pointdata" %}';
         $.getJSON(pointdataurl, function (pointdata) {
@@ -74,7 +118,12 @@
         $.getJSON(brewsterdataurl, function (brewsterdata) {
             L.geoJSON(brewsterdata).addTo(map);
         });
+
+        var google_streets = L.gridLayer.googleMutant({
+            type: 'roadmap',
+        }).addTo(map);
     }
+
 
 </script>
 
@@ -168,20 +217,21 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.11.0/js/bootstrap-tour.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>
+<script src='https://unpkg.com/leaflet.gridlayer.googlemutant@latest/Leaflet.GoogleMutant.js'></script>
 {#<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>#}
 {#<script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script>#}
-{#<script src='https://unpkg.com/leaflet.gridlayer.googlemutant@latest/Leaflet.GoogleMutant.js'></script>#}
+
 {#<script src="assets/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.min.js"></script>#}
 {#<script src="assets/js/leaflet.navbar/Leaflet.NavBar.js"></script>#}
 {#<script src="assets/js/Leaflet.MakiMarkers.js"></script>#}
 {#<script src="assets/js/leaflet.ajax.js"></script>#}
 {#<script src="assets/js/leaflet.easyPrint.js"></script>#}
-<script src="/static/js/app.js"></script>
+{#<script src="/static/js/app.js"></script>#}
 </body>
 </html>

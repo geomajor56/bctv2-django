@@ -12,7 +12,6 @@ class BctPoint(models.Model):
     grantor = models.CharField(max_length=100, blank=True)
     upland = models.FloatField( blank=True)
     wetland = models.FloatField( blank=True)
-    total = models.FloatField( blank=True)
     narrative = tinymce_models.HTMLField(default='type something here', blank=True)
     geom = models.PointField()
 

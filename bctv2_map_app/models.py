@@ -12,13 +12,12 @@ class BctPoint(models.Model):
     grantor = models.CharField(max_length=100, blank=True)
     upland = models.FloatField( blank=True)
     wetland = models.FloatField( blank=True)
-    total = models.FloatField( blank=True)
     narrative = tinymce_models.HTMLField(default='type something here', blank=True)
     geom = models.PointField()
 
     def __str__(self):
         return self.bct_id
- 
+
 
 class BctParcel(models.Model):
     bct_id = models.CharField(max_length=50)

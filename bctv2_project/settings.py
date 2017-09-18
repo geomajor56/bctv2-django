@@ -4,23 +4,23 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = 'hud=a(815lc4md^grvhp_xt$8c&olr8urudsuwba4pcsusmc4z'
 
-
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
+GDAL_LIBRARY_PATH = ''
+
 LEAFLET_CONFIG = {
-    # 'SRID': '4326',
-    'DEFAULT_CENTER': (41.74737922562798, -70.0688695),
+
+    'SPATIAL_EXTENT': (-69.95904922485353, 41.777072623006156, -70.17877578735353, 41.7177741935448),
+    'DEFAULT_CENTER': (41.79895948813606, -70.3070068359375),
     'DEFAULT_ZOOM': 13,
     'MIN_ZOOM': 10,
     'MAX_ZOOM': 18,
-    'RESET_VIEW': False,
-    'ATTRIBUTION_PREFIX': 'Powered by django-leaflet',
+    'ATTRIBUTION_PREFIX': 'Powered by djansfrghgo-leaflet',
     'SCALE': 'both',
-    # 'MINIMAP': True,
     'TILES': [],
-
+    'RESET_VIEW': False,
     'PLUGINS': {
         'jquery': {
             'css': [],
@@ -63,11 +63,11 @@ LEAFLET_CONFIG = {
             'auto-include': True,
         },
 
-        # "nanoGallery": {
-        #     'css': ['https://cdnjs.cloudflare.com/ajax/libs/nanogallery/5.10.3/css/nanogallery.min.css'],
-        #     'js': 'https://cdnjs.cloudflare.com/ajax/libs/nanogallery/5.10.3/jquery.nanogallery.min.js',
-        #     'auto-include': True
-        # },
+        "nanoGallery": {
+            'css': ['https://cdnjs.cloudflare.com/ajax/libs/nanogallery/5.10.3/css/nanogallery.min.css'],
+            'js': 'https://cdnjs.cloudflare.com/ajax/libs/nanogallery/5.10.3/jquery.nanogallery.min.js',
+            'auto-include': True
+        },
 
     }
 }
@@ -85,6 +85,7 @@ TINYMCE_SPELLCHECKER = True
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.gis',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',

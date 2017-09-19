@@ -5,3 +5,13 @@ bct2venv
 db.sqlite3
 /static
 .DS_Store
+.idea/bctv2.iml
+.idea/dataSources/99917c8b-77ff-45ac-9cbb-4c1a8c604b18/_metadata_/metadata.values.at
+.idea/dataSources/99917c8b-77ff-45ac-9cbb-4c1a8c604b18/_metadata_/metadata.values.s
+.idea/dataSources/99917c8b-77ff-45ac-9cbb-4c1a8c604b18/_staging_/
+.idea/encodings.xml
+.idea/inspectionProfiles/
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+

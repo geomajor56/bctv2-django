@@ -8,7 +8,7 @@ from bctv2_map_app.models import BctParcel, BrewsterBorder
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', TemplateView.as_view(template_name='index.html'), name='home'),
-    url(r'^data.geojson.parcel$', GeoJSONLayerView.as_view(model=BctParcel), name='parceldata'),
+    url(r'^data.geojson.parcel$', GeoJSONLayerView.as_view(model=BctParcel, properties=('grantor', 'bct_id', 'narrative',)), name='parceldata'),
     url(r'^data.geojson.brewster$', GeoJSONLayerView.as_view(model=BrewsterBorder), name='brewsterdata'),
     url(r'^tinymce/', include('tinymce.urls')),
 

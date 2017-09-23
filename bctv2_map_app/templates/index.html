@@ -52,6 +52,8 @@
     var map;
 
     L.MakiMarkers.accessToken = "pk.eyJ1IjoiZ2VvbWFqb3I1NiIsImEiOiJjaW9iejZ4cGYwNDc0dnpsejBmc2g0Z3QzIn0.8hKDWYbdQW7cbIE7eeu4-A";
+
+
     var google_hybrid = L.gridLayer.googleMutant({
         type: 'hybrid'
     });
@@ -85,7 +87,14 @@
 
         var parceldataurl = '{% url "parceldata" %}';
         $.getJSON(parceldataurl, function (parceldata) {
-            L.geoJson(parceldata).addTo(map);
+            L.geoJson(parceldata, {
+                onEachFeature: function (feature, layer) {
+                    var props = feature.properties;
+                    console.log(props.bct_id);
+                    layer.bindPopup(props.bct_id + props.grantor + props.narrative);
+
+                }
+            }).addTo(map);
         });
 
         var brewsterdataurl = '{% url 'brewsterdata' %}';

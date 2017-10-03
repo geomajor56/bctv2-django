@@ -47,12 +47,27 @@
 <body>
 
 {% leaflet_map "main" callback="main_map_init" %}
-
+<script src="https://unpkg.com/@turf/turf@3.5.2/turf.min.js"></script>
 <script type="text/javascript">
     var map;
 
     L.MakiMarkers.accessToken = "pk.eyJ1IjoiZ2VvbWFqb3I1NiIsImEiOiJjaW9iejZ4cGYwNDc0dnpsejBmc2g0Z3QzIn0.8hKDWYbdQW7cbIE7eeu4-A";
 
+    var greenTree = L.MakiMarkers.icon({
+        icon: "park",
+        color: "3F9110",
+        size: "s"
+    });
+    var redTree = L.MakiMarkers.icon({
+        icon: "park",
+        color: "F04441",
+        size: "s"
+    });
+    var blueTree = L.MakiMarkers.icon({
+        icon: "park",
+        color: "442DB5",
+        size: "s"
+    });
 
     var google_hybrid = L.gridLayer.googleMutant({
         type: 'hybrid'
@@ -86,27 +101,105 @@
 
 
         var parceldataurl = '{% url "parceldata" %}';
-        $.getJSON(parceldataurl, function (parceldata) {
-            L.geoJson(parceldata, {
-                onEachFeature: function (feature, layer) {
-                    var props = feature.properties;
-                    console.log(props.bct_id);
-                    layer.bindPopup(props.bct_id + props.grantor + props.narrative);
 
+        function getColor(d) {
+		return d =='A' ? 'green' :
+				d == 'B' ? 'red' :
+				d =='C'  ? 'blue' :
+				'#FFEDA0';
+	}
+
+	function style(feature) {
+		return {
+			weight: 2,
+			opacity: 1,
+			color: 'white',
+			dashArray: '3',
+			fillOpacity: 0.2,
+			fillColor: getColor(feature.properties.owner_type)
+		};
+	}
+
+
+
+        $.getJSON(parceldataurl, function (parceldata){
+
+        L.geoJson(parceldata, {
+            style: style,
+            onEachFeature: function (feature, layer) {
+                layer.bindTooltip(
+                feature.properties.grantor,
+                {
+                    permanent: true,
+                    direction: 'auto',
+                    clastsName: 'parcelLabel'
                 }
-            }).addTo(map);
-        });
+            );
 
-        var brewsterdataurl = '{% url 'brewsterdata' %}';
-        $.getJSON(brewsterdataurl, function (brewsterdata) {
-            L.geoJSON(brewsterdata).addTo(map);
-        });
+                if (feature.properties.owner_type === "A") {
 
-        var google_streets = L.gridLayer.googleMutant({
-            type: 'roadmap'
+                    if (feature.geometry.type === 'MultiPolygon') {
+                        var centroid = turf.centroid(feature);
+                        var lon = centroid.geometry.coordinates[0];
+                        var lat = centroid.geometry.coordinates[1];
+
+                        L.marker([lat, lon,], {
+                            icon: greenTree,
+                            title: feature.properties.grantor,
+                            riseOnHover: true
+                        }).addTo(map);
+                    }
+
+                } else if (feature.properties.owner_type === "B") {
+                    if (feature.geometry.type === 'MultiPolygon') {
+                        var centroid = turf.centroid(feature);
+                        var lon = centroid.geometry.coordinates[0];
+                        var lat = centroid.geometry.coordinates[1];
+
+                        L.marker([lat, lon,], {
+                            icon: redTree,
+                            title: feature.properties.grantor,
+                            riseOnHover: true
+                        }).addTo(map);
+                    }
+
+
+                } else {
+                    if (feature.geometry.type === 'MultiPolygon') {
+                        var centroid = turf.centroid(feature);
+                        var lon = centroid.geometry.coordinates[0];
+                        var lat = centroid.geometry.coordinates[1];
+                        L.marker([lat, lon,], {
+                            icon: blueTree,
+                            title: feature.properties.BCT,
+                            riseOnHover: true
+                        }).addTo(map);
+                    }
+                }
+
+            }
+            {#                onEachFeature: function (feature, layer) {#}
+            {#                    var props = feature.properties;#}
+            {#                    console.log(props.bct_id);#}
+            {#                    layer.bindPopup(props.bct_id + props.grantor + props.narrative);#}
+            {##}
+            {#                }#}
         }).addTo(map);
+    }
 
-        {#            console.log(map.getCenter());#}
+    )
+    ;
+
+    var brewsterdataurl = '{% url 'brewsterdata' %}';
+    $.getJSON(brewsterdataurl, function (brewsterdata) {
+        L.geoJSON(brewsterdata).addTo(map);
+    });
+
+    var google_streets = L.gridLayer.googleMutant({
+        type: 'roadmap'
+    }).addTo(map);
+
+    {#            console.log(map.getCenter());#}
     }
 
 </script>

@@ -22,7 +22,8 @@ class BctParcel(models.Model):
 
 
 class BrewsterBorder(models.Model):
-    geom = models.PolygonField()
+    fid = models.BigIntegerField(default=1)
+    geom = models.MultiPolygonField(srid=4326)
 
 
 class Narrative(models.Model):

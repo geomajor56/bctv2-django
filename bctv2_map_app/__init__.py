@@ -1,0 +1,1 @@
+default_app_config = 'bctv2_map_app.apps.Bctv2MapAppConfig'

@@ -49,6 +49,15 @@
 {% leaflet_map "main" callback="main_map_init" %}
 <script src="https://unpkg.com/@turf/turf@3.5.2/turf.min.js"></script>
 <script type="text/javascript">
+
+    {#  navbar buttons  #}
+
+    $("#legend-btn").click(function () {
+        $("#legendModal").modal("show");
+        $(".navbar-collapse.in").collapse("hide");
+        return false;
+    });
+
     var map;
 
     L.MakiMarkers.accessToken = "pk.eyJ1IjoiZ2VvbWFqb3I1NiIsImEiOiJjaW9iejZ4cGYwNDc0dnpsejBmc2g0Z3QzIn0.8hKDWYbdQW7cbIE7eeu4-A";
@@ -103,103 +112,94 @@
         var parceldataurl = '{% url "parceldata" %}';
 
         function getColor(d) {
-		return d =='A' ? 'green' :
-				d == 'B' ? 'red' :
-				d =='C'  ? 'blue' :
-				'#FFEDA0';
-	}
+            return d == 'A' ? 'green' :
+                d == 'B' ? 'red' :
+                    d == 'C' ? 'blue' :
+                        '#FFEDA0';
+        }
 
-	function style(feature) {
-		return {
-			weight: 2,
-			opacity: 1,
-			color: 'white',
-			dashArray: '3',
-			fillOpacity: 0.2,
-			fillColor: getColor(feature.properties.owner_type)
-		};
-	}
+        function style(feature) {
+            return {
+                weight: 2,
+                opacity: 1,
+                color: 'white',
+                dashArray: '3',
+                fillOpacity: 0.2,
+                fillColor: getColor(feature.properties.owner_type)
+            };
+        }
 
 
+        $.getJSON(parceldataurl, function (parceldata) {
 
-        $.getJSON(parceldataurl, function (parceldata){
+                L.geoJson(parceldata, {
+                    style: style,
+                    onEachFeature: function (feature, layer) {
 
-        L.geoJson(parceldata, {
-            style: style,
-            onEachFeature: function (feature, layer) {
-                layer.bindTooltip(
-                feature.properties.grantor,
-                {
-                    permanent: true,
-                    direction: 'auto',
-                    clastsName: 'parcelLabel'
-                }
-            );
 
-                if (feature.properties.owner_type === "A") {
+                        if (feature.properties.owner_type === "A") {
 
-                    if (feature.geometry.type === 'MultiPolygon') {
-                        var centroid = turf.centroid(feature);
-                        var lon = centroid.geometry.coordinates[0];
-                        var lat = centroid.geometry.coordinates[1];
+                            if (feature.geometry.type === 'MultiPolygon') {
+                                var centroid = turf.centroid(feature);
+                                var lon = centroid.geometry.coordinates[0];
+                                var lat = centroid.geometry.coordinates[1];
 
-                        L.marker([lat, lon,], {
-                            icon: greenTree,
-                            title: feature.properties.grantor,
-                            riseOnHover: true
-                        }).addTo(map);
+                                L.marker([lat, lon,], {
+                                    icon: greenTree,
+                                    title: feature.properties.grantor,
+                                    riseOnHover: true
+                                }).addTo(map);
+                            }
+
+                        } else if (feature.properties.owner_type === "B") {
+                            if (feature.geometry.type === 'MultiPolygon') {
+                                var centroid = turf.centroid(feature);
+                                var lon = centroid.geometry.coordinates[0];
+                                var lat = centroid.geometry.coordinates[1];
+
+                                L.marker([lat, lon,], {
+                                    icon: redTree,
+                                    title: feature.properties.grantor,
+                                    riseOnHover: true
+                                }).addTo(map);
+                            }
+
+
+                        } else {
+                            if (feature.geometry.type === 'MultiPolygon') {
+                                var centroid = turf.centroid(feature);
+                                var lon = centroid.geometry.coordinates[0];
+                                var lat = centroid.geometry.coordinates[1];
+                                L.marker([lat, lon,], {
+                                    icon: blueTree,
+                                    title: feature.properties.BCT,
+                                    riseOnHover: true
+                                }).addTo(map);
+                            }
+                        }
+
                     }
-
-                } else if (feature.properties.owner_type === "B") {
-                    if (feature.geometry.type === 'MultiPolygon') {
-                        var centroid = turf.centroid(feature);
-                        var lon = centroid.geometry.coordinates[0];
-                        var lat = centroid.geometry.coordinates[1];
-
-                        L.marker([lat, lon,], {
-                            icon: redTree,
-                            title: feature.properties.grantor,
-                            riseOnHover: true
-                        }).addTo(map);
-                    }
-
-
-                } else {
-                    if (feature.geometry.type === 'MultiPolygon') {
-                        var centroid = turf.centroid(feature);
-                        var lon = centroid.geometry.coordinates[0];
-                        var lat = centroid.geometry.coordinates[1];
-                        L.marker([lat, lon,], {
-                            icon: blueTree,
-                            title: feature.properties.BCT,
-                            riseOnHover: true
-                        }).addTo(map);
-                    }
-                }
-
+                    {#                onEachFeature: function (feature, layer) {#}
+                    {#                    var props = feature.properties;#}
+                    {#                    console.log(props.bct_id);#}
+                    {#                    layer.bindPopup(props.bct_id + props.grantor + props.narrative);#}
+                    {##}
+                    {#                }#}
+                }).addTo(map);
             }
-            {#                onEachFeature: function (feature, layer) {#}
-            {#                    var props = feature.properties;#}
-            {#                    console.log(props.bct_id);#}
-            {#                    layer.bindPopup(props.bct_id + props.grantor + props.narrative);#}
-            {##}
-            {#                }#}
+        )
+        ;
+
+        var brewsterdataurl = '{% url 'brewsterdata' %}';
+        $.getJSON(brewsterdataurl, function (brewsterdata) {
+            L.geoJSON(brewsterdata).addTo(map);
+        });
+
+        var google_streets = L.gridLayer.googleMutant({
+            type: 'roadmap'
         }).addTo(map);
-    }
 
-    )
-    ;
-
-    var brewsterdataurl = '{% url 'brewsterdata' %}';
-    $.getJSON(brewsterdataurl, function (brewsterdata) {
-        L.geoJSON(brewsterdata).addTo(map);
-    });
-
-    var google_streets = L.gridLayer.googleMutant({
-        type: 'roadmap'
-    }).addTo(map);
-
-    {#            console.log(map.getCenter());#}
+        {#            console.log(map.getCenter());#}
     }
 
 </script>
@@ -215,7 +215,8 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="legend-btn"><i class="fa fa-image white"></i>&nbsp;&nbsp;Show Legend</a></li>
+{#                <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="legend-btn"><i class="fa fa-image white"></i>&nbsp;&nbsp;Show Legend</a></li>#}
+                <li class="hidden-xs"><a href="#legendModal" data-toggle="collapse" data-target=".navbar-collapse.in" id="legend-btn"><i class="fa fa-image white"></i>&nbsp;&nbsp;Show Legend</a></li>
                 <li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="list-btn"><i class="fa fa-list white"></i>&nbsp;&nbsp;Search Grantors List</a></li>
                 <li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="slideshow-btn"><i class="fa fa-camera-retro white"></i>&nbsp;&nbsp;Image Gallery</a></li>
                 <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="about-btn"><i class="fa fa-question-circle white"></i>&nbsp;&nbsp;About</a></li>
@@ -301,6 +302,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>
 <script src='https://unpkg.com/leaflet.gridlayer.googlemutant@latest/Leaflet.GoogleMutant.js'></script>
+
 {#<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>#}
 {#<script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script>#}
 

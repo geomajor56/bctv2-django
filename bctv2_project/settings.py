@@ -27,6 +27,11 @@ LEAFLET_CONFIG = {
             'js': 'https://code.jquery.com/jquery-2.2.4.min.js',
             'auto-include': True,
         },
+        'app-css': {
+            'css': ["/static/css/app.css"],
+            'js': [],
+            'auto-include': True,
+        },
         'Leaflet-Navbar': {
             'css': ['/static/leaflet-plugins/leaflet-navbar/Leaflet.NavBar.css'],
             'js': '/static/leaflet-plugins/leaflet-navbar/Leaflet.NavBar.js',
@@ -83,6 +88,7 @@ TINYMCE_SPELLCHECKER = True
 # Application definition
 
 INSTALLED_APPS = [
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.gis',
@@ -125,9 +131,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'bctv2_project.wsgi.application'
-
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
     'default': {

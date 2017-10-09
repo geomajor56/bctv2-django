@@ -17,6 +17,10 @@ class BctParcel(models.Model):
     narrative = tinymce_models.HTMLField(default='type something here', blank=True)
     geom = models.MultiPolygonField()
 
+    class Meta:
+        verbose_name = 'BCT Property'
+        verbose_name_plural = 'BCT Properties'
+
     def __str__(self):
         return self.bct_id
 
@@ -25,9 +29,17 @@ class BrewsterBorder(models.Model):
     fid = models.BigIntegerField(default=1)
     geom = models.MultiPolygonField(srid=4326)
 
+    class Meta:
+        verbose_name = 'Town of Brewster Border'
+        verbose_name_plural = 'Town of Brewster Border'
+
 
 class Narrative(models.Model):
     narrative = tinymce_models.HTMLField(default='intro narrative', blank=True)
+
+    class Meta:
+        verbose_name = 'Introduction Narrative'
+        verbose_name_plural = 'Introduction Narrative'
 
     def __str__(self):
         return self.narrative

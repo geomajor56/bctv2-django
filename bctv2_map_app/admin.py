@@ -5,7 +5,8 @@ from .models import BctParcel, BrewsterBorder, Narrative
 
 
 class BctParcelAdmin(LeafletGeoAdmin):
-    fields = (('bct_id', 'grantor', 'acquired', 'narrative'), 'geom')
+    # fields = (('bct_id', 'grantor', 'acquired', 'narrative'), 'geom')
+    fields = ('bct_id', 'grantor', 'acquired', 'narrative')
     list_display = ('bct_id', 'grantor', 'acquired', 'habitat', 'upland', 'wetland')
     date_hierarchy = 'acquired'
     settings_overrides = {

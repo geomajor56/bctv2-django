@@ -34,10 +34,9 @@
     <!--assorted library plugins css-->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
           integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/solar/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-GC77SCz5O11gVtXl0sSfbQYEWSSznn1wPDHgL1BGUTFU9iEoUrG4IOJa5CBVY8kR" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="/static/css/app.css">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/app.css' %}" rel="stylesheet">
 
     <!--bootstrap tour plugin-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.11.0/css/bootstrap-tour.min.css"/>
@@ -45,22 +44,70 @@
 
 </head>
 <body>
+<!--welcome modal container-->
+<div id="welcome" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title">Brewster Conservation Trust</h3>
+            </div>
+            <div class="modal-body">
+                <h3>Welcome</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum quis risus vulputate, condimentum libero ut, lacinia felis.
+                    Nam feugiat odio semper nunc suscipit semper euullamcorper neque. In eu elementum orci, quis maximus augue. Nulla in augue
+                    quis turpis hendrerit faucibus. Vivamus rutrum, mauris ut ultrices vulputate, neque massa ullamcorper
+                    sem, ultricies porta est ligula et nisl. Integer elementum purus luctus eros consequat, vel vehicula mi porttitor.
+                    Nullam tellus est, blandit nec leo non, vehicula egestas tellus.Suspendisse eros augue, hendrerit at sagittis
+                    eu, sodales sit amet sapien. Integer at enim fringilla, elementum ipsum eu, volutpat lacus.
+                </p>
+
+                <h3>Getting Started</h3>
+
+                <p>After closing this window, click on any icon for information on property.
+                    Or take a short guided tour for more navigation tips</p>
+
+
+            </div>
+            <div class="modal-footer">
+                </p>
+                <button id="tour-btn" type="button" class="btn btn-success">Guided Tour</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 
 {% leaflet_map "main" callback="main_map_init" %}
 <script src="https://unpkg.com/@turf/turf@3.5.2/turf.min.js"></script>
 <script type="text/javascript">
 
-    {#  navbar buttons  #}
-
-    $("#legend-btn").click(function () {
-        $("#legendModal").modal("show");
-        $(".navbar-collapse.in").collapse("hide");
-        return false;
-    });
 
     var map;
 
     L.MakiMarkers.accessToken = "pk.eyJ1IjoiZ2VvbWFqb3I1NiIsImEiOiJjaW9iejZ4cGYwNDc0dnpsejBmc2g0Z3QzIn0.8hKDWYbdQW7cbIE7eeu4-A";
+    $(document).ready(function () {
+
+        $("#welcome").modal("show");
+        $(window).resize(function () {
+            sizeLayerControl()
+        });
+
+        $("#legend-btn").click(function () {
+            $("#legendModal").modal("show");
+            $(".navbar-collapse.in").collapse("hide");
+            return false;
+        });
+
+        $("#welcome-btn").click(function () {
+            $("#welcome").modal("show");
+            $(".navbar-collapse.in").collapse("hide");
+            return false;
+        });
+    });
 
     var greenTree = L.MakiMarkers.icon({
         icon: "park",
@@ -147,8 +194,9 @@
                                 L.marker([lat, lon,], {
                                     icon: greenTree,
                                     title: feature.properties.grantor,
-                                    riseOnHover: true
-                                }).addTo(map);
+                                    riseOnHover: true,
+
+                                }).bindPopup(feature.properties.narrative).addTo(map);
                             }
 
                         } else if (feature.properties.owner_type === "B") {
@@ -175,6 +223,7 @@
                                     title: feature.properties.BCT,
                                     riseOnHover: true
                                 }).addTo(map);
+
                             }
                         }
 
@@ -202,6 +251,7 @@
         {#            console.log(map.getCenter());#}
     }
 
+    {#    });#}
 </script>
 
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -215,8 +265,8 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-{#                <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="legend-btn"><i class="fa fa-image white"></i>&nbsp;&nbsp;Show Legend</a></li>#}
-                <li class="hidden-xs"><a href="#legendModal" data-toggle="collapse" data-target=".navbar-collapse.in" id="legend-btn"><i class="fa fa-image white"></i>&nbsp;&nbsp;Show Legend</a></li>
+                <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="legend-btn"><i class="fa fa-image white"></i>&nbsp;&nbsp;Show Legend</a></li>
+                {#                <li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="legend-btn"><i class="fa fa-image white"></i>&nbsp;&nbsp;Show Legend</a></li>#}
                 <li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="list-btn"><i class="fa fa-list white"></i>&nbsp;&nbsp;Search Grantors List</a></li>
                 <li class="hidden-xs"><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="slideshow-btn"><i class="fa fa-camera-retro white"></i>&nbsp;&nbsp;Image Gallery</a></li>
                 <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" id="about-btn"><i class="fa fa-question-circle white"></i>&nbsp;&nbsp;About</a></li>
@@ -296,7 +346,7 @@
 </div><!-- /.modal -->
 
 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.11.0/js/bootstrap-tour.js"></script>
 {#<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>#}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.min.js"></script>
